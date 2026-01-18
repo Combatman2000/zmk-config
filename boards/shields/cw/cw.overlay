@@ -11,8 +11,16 @@
     compatible = "zmk,kscan-gpio-direct";
     label = "KSCAN0";
 
-    /* P0.06 => &gpio0 6 */
-    input-gpios = <&gpio0 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+    /*
+     * Två knappar, båda aktiva låga med intern pull-up:
+     * - P0.06 -> GND
+     * - P0.08 -> GND
+     *
+     * Ordningen här blir "kolumnordningen" i keymapen (via transformen).
+     */
+    input-gpios =
+      <&gpio0 6 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>,
+      <&gpio0 8 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
 
     debounce-press-ms = <5>;
     debounce-release-ms = <5>;
@@ -21,7 +29,9 @@
   default_transform: keymap_transform_0 {
     compatible = "zmk,matrix-transform";
     rows = <1>;
-    columns = <1>;
-    map = <RC(0,0)>;
+    columns = <2>;
+
+    /* 2 tangenter: (0,0) och (0,1) i den ordning du vill mappa keymapen */
+    map = <RC(0,0) RC(0,1)>;
   };
 };
