@@ -1,0 +1,6 @@
+if SHIELD_CW
+
+config ZMK_KEYBOARD_NAME
+    default "cw"
+
+endif # SHIELD_CW
